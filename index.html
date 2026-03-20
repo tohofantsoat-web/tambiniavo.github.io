@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamby | Portfolio IT</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --bg2: #0b1120;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-2: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.14);
+      --text: #e5eefc;
+      --muted: #a8b3cf;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --accent3: #22c55e;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.24), transparent 30%),
+        radial-gradient(circle at top right, rgba(6, 182, 212, 0.18), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.12), transparent 28%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Radio controls */
+    input[type="radio"] {
+      display: none;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(18px);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 16px;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+      color: white;
+      font-weight: 900;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .nav label {
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: 0.25s ease;
+      user-select: none;
+      font-size: 0.95rem;
+    }
+
+    .nav label:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    #home:checked ~ .wrapper .nav label[for="home"],
+    #about:checked ~ .wrapper .nav label[for="about"],
+    #skills:checked ~ .wrapper .nav label[for="skills"],
+    #projects:checked ~ .wrapper .nav label[for="projects"],
+    #contact:checked ~ .wrapper .nav label[for="contact"] {
+      color: white;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(6, 182, 212, 0.18));
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .page {
+      display: none;
+      margin-top: 26px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #home:checked ~ .wrapper .page.home { display: block; }
+    #about:checked ~ .wrapper .page.about { display: block; }
+    #skills:checked ~ .wrapper .page.skills { display: block; }
+    #projects:checked ~ .wrapper .page.projects { display: block; }
+    #contact:checked ~ .wrapper .page.contact { display: block; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: center;
+      min-height: calc(100vh - 180px);
+    }
+
+    .hero-card,
+    .info-card,
+    .project-card,
+    .contact-card {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.05));
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -80px;
+      top: -80px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #dbeafe;
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    .badge .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent3), var(--accent2));
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.6);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      line-height: 1.02;
+      margin-bottom: 16px;
+      letter-spacing: -1.5px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff, #8be9fd, #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 700px;
+      margin-bottom: 26px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: white;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.28);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.12);
+      color: var(--text);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .info-card {
+      padding: 22px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+
+    .glow {
+      display: inline-block;
+      padding: 10px 14px;
+      margin-top: 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.16), rgba(6,182,212,0.12));
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #dbeafe;
+      font-size: 0.95rem;
+    }
+
+    .section-title {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      letter-spacing: -0.8px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.8;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .about-box,
+    .skill-box,
+    .project-card,
+    .contact-card {
+      padding: 22px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      color: #dce7ff;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      padding: 16px;
+      border-left: 3px solid var(--accent2);
+      background: rgba(255,255,255,0.04);
+      border-radius: 0 18px 18px 0;
+    }
+
+    .timeline-item h4 {
+      margin-bottom: 6px;
+      font-size: 1.02rem;
+    }
+
+    .timeline-item p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .skills-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .skill {
+      display: grid;
+      gap: 8px;
+    }
+
+    .skill-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text);
+      font-size: 0.96rem;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -40px auto;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.28), transparent 65%);
+      pointer-events: none;
+    }
+
+    .project-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .project-meta span {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #dbeafe;
+      font-size: 0.88rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+    }
+
+    .contact-card .line {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .contact-card .line strong {
+      font-size: 1rem;
+    }
+
+    .contact-card .line span,
+    .contact-card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+      padding-bottom: 8px;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .projects-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        border-radius: 24px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav {
+        justify-content: center;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrapper {
+        padding: 14px;
+      }
+
+      .hero-card,
+      .info-card,
+      .project-card,
+      .contact-card,
+      .about-box,
+      .skill-box {
+        padding: 18px;
+      }
+
+      .nav label {
+        padding: 9px 12px;
+        font-size: 0.9rem;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <input type="radio" name="page" id="home" checked>
+  <input type="radio" name="page" id="about">
+  <input type="radio" name="page" id="skills">
+  <input type="radio" name="page" id="projects">
+  <input type="radio" name="page" id="contact">
+
+  <div class="wrapper">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">T</div>
+        <div>
+          <div style="font-size:1.03rem;">Tamby</div>
+          <div style="font-size:0.85rem;color:var(--muted);">Specialiste IT</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <label for="home">Accueil</label>
+        <label for="about">À propos</label>
+        <label for="skills">Compétences</label>
+        <label for="projects">Projets</label>
+        <label for="contact">Contact</label>
+      </nav>
+    </header>
+
+    <!-- PAGE ACCUEIL -->
+    <main class="page home">
+      <section class="hero">
+        <div class="hero-card">
+          <div class="badge"><span class="dot"></span> Disponible pour projets IT</div>
+          <h1>Bonjour, je suis <span class="gradient-text">Tamby</span></h1>
+          <p class="subtitle">
+            Spécialiste dans le domaine IT, je conçois, j’optimise et je sécurise des solutions modernes.
+            Ce portfolio présente mes compétences en développement, administration système, réseaux,
+            cybersécurité et support technique.
+          </p>
+
+          <div class="actions">
+            <label class="btn primary" for="projects">Voir mes projets</label>
+            <label class="btn secondary" for="contact">Me contacter</label>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>IT</strong>
+              <span>Développement & support</span>
+            </div>
+            <div class="stat">
+              <strong>Réseaux</strong>
+              <span>Installation & configuration</span>
+            </div>
+            <div class="stat">
+              <strong>Sécurité</strong>
+              <span>Bonnes pratiques & protection</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-stack">
+          <div class="info-card">
+            <h3>Profil professionnel</h3>
+            <p>
+              Je suis orienté vers les solutions efficaces, le travail propre et la résolution de problèmes.
+              Mon objectif est de créer des systèmes fiables, modernes et adaptés aux besoins réels.
+            </p>
+            <div class="glow">Technologies • Systèmes • Réseaux • Sécurité</div>
+          </div>
+
+          <div class="info-card">
+            <h3>Ce que je fais</h3>
+            <p>
+              Développement web, maintenance informatique, configuration réseau, assistance utilisateur,
+              gestion système et optimisation des performances.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- PAGE A PROPOS -->
+    <section class="page about">
+      <div class="section-title">
+        <h2>À propos de moi</h2>
+        <p>
+          Je suis Tamby, un passionné de l’informatique qui aime transformer les idées en solutions utiles.
+          J’aime construire des interfaces propres, comprendre les systèmes et apporter des réponses rapides
+          aux problèmes techniques.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="about-box">
+          <h3 style="margin-bottom:12px;">Mon approche</h3>
+          <p style="color:var(--muted); line-height:1.8;">
+            J’accorde beaucoup d’importance à la simplicité, à la performance et à la fiabilité.
+            Que ce soit pour un site web, un réseau ou une machine, je cherche toujours une solution claire,
+            efficace et maintenable.
+          </p>
+
+          <div class="tag-row">
+            <span class="tag">Développement Web</span>
+            <span class="tag">Administration Système</span>
+            <span class="tag">Réseaux</span>
+            <span class="tag">Cybersécurité</span>
+            <span class="tag">Support IT</span>
+          </div>
+        </div>
+
+        <div class="about-box">
+          <h3 style="margin-bottom:12px;">Parcours / expérience</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <h4>Solutions numériques</h4>
+              <p>Création de pages web modernes, interface claire et responsive.</p>
+            </div>
+            <div class="timeline-item">
+              <h4>Gestion informatique</h4>
+              <p>Installation, configuration et dépannage de systèmes et logiciels.</p>
+            </div>
+            <div class="timeline-item">
+              <h4>Réseaux & sécurité</h4>
+              <p>Bonnes pratiques de sécurité, contrôle d’accès et optimisation réseau.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE COMPETENCES -->
+    <section class="page skills">
+      <div class="section-title">
+        <h2>Mes compétences</h2>
+        <p>
+          Voici un aperçu de mes spécialités IT. Tu peux garder cette structure ou modifier les niveaux
+          selon ton vrai profil.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="skill-box">
+          <h3 style="margin-bottom:16px;">Compétences techniques</h3>
+          <div class="skills-list">
+            <div class="skill">
+              <div class="skill-head"><span>HTML / CSS</span><span>95%</span></div>
+              <div class="bar"><div class="fill" style="width:95%"></div></div>
+            </div>
+            <div class="skill">
+              <div class="skill-head"><span>Support informatique</span><span>90%</span></div>
+              <div class="bar"><div class="fill" style="width:90%"></div></div>
+            </div>
+            <div class="skill">
+              <div class="skill-head"><span>Administration système</span><span>85%</span></div>
+              <div class="bar"><div class="fill" style="width:85%"></div></div>
+            </div>
+            <div class="skill">
+              <div class="skill-head"><span>Réseaux / configuration</span><span>82%</span></div>
+              <div class="bar"><div class="fill" style="width:82%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-box">
+          <h3 style="margin-bottom:16px;">Spécialités IT</h3>
+          <div class="tag-row">
+            <span class="tag">Création de sites web</span>
+            <span class="tag">Maintenance PC</span>
+            <span class="tag">Installation de systèmes</span>
+            <span class="tag">Configuration réseau</span>
+            <span class="tag">Sécurisation basique</span>
+            <span class="tag">Dépannage logiciel</span>
+            <span class="tag">Optimisation</span>
+            <span class="tag">Support utilisateur</span>
+          </div>
+
+          <div style="margin-top:18px;color:var(--muted);line-height:1.8;">
+            Je peux intervenir sur plusieurs domaines : front-end simple, assistance technique,
+            résolution de problèmes, paramétrage, maintenance et amélioration de l’environnement de travail.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE PROJETS -->
+    <section class="page projects">
+      <div class="section-title">
+        <h2>Mes projets</h2>
+        <p>
+          Quelques exemples de projets que tu peux afficher dans ton portfolio. Tu peux remplacer ces titres
+          par tes vrais travaux.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>Portfolio personnel</h3>
+          <p>
+            Un site élégant pour présenter mon profil, mes compétences et mes services IT dans un style moderne.
+          </p>
+          <div class="project-meta">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>UI moderne</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Support et maintenance</h3>
+          <p>
+            Gestion de configuration, dépannage et amélioration des performances d’un poste ou d’un système.
+          </p>
+          <div class="project-meta">
+            <span>Maintenance</span>
+            <span>Système</span>
+            <span>Dépannage</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Réseau & sécurité</h3>
+          <p>
+            Mise en place de bases réseau, protection des accès et bonnes pratiques pour un environnement fiable.
+          </p>
+          <div class="project-meta">
+            <span>Réseaux</span>
+            <span>Sécurité</span>
+            <span>Configuration</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PAGE CONTACT -->
+    <section class="page contact">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>
+          Cette page te permet d’afficher tes infos de contact et de donner une image sérieuse à ton portfolio.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="line">
+            <strong>Nom</strong>
+            <span>Tamby</span>
+          </div>
+          <div class="line">
+            <strong>Spécialité</strong>
+            <span>Informatique / IT</span>
+          </div>
+          <div class="line">
+            <strong>Domaines</strong>
+            <span>Développement, réseaux, système, support, sécurité</span>
+          </div>
+          <div class="line">
+            <strong>Message</strong>
+            <span>Disponible pour projets, collaboration et assistance technique.</span>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <h3 style="margin-bottom:12px;">Présentation courte</h3>
+          <p>
+            Je suis un spécialiste IT motivé, rigoureux et orienté résultats. J’aime apprendre, résoudre les
+            problèmes et créer des solutions simples mais efficaces. Mon objectif est d’apporter de la valeur
+            à chaque projet.
+          </p>
+
+          <div class="tag-row" style="margin-top:18px;">
+            <span class="tag">Professionnel</span>
+            <span class="tag">Fiable</span>
+            <span class="tag">Polyvalent</span>
+            <span class="tag">Moderne</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        © 2026 Tamby — Portfolio IT. Fichier unique HTML + CSS.
+      </div>
+    </section>
+  </div>
+</body>
+</html>
