@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projets | Tambiniavo TOHOFANTSOA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="projects">
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <span class="brand-badge">T</span>
+        <span>Tambiniavo Portfolio</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" data-page="home">Accueil</a>
+        <a href="about.html" data-page="about">Profil</a>
+        <a href="skills.html" data-page="skills">Compétences</a>
+        <a href="projects.html" data-page="projects">Projets</a>
+        <a href="contact.html" data-page="contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="btn btn-primary" href="assets/cv/CV_Tambiniavo_Tohofantsoa.pdf" download>Télécharger CV</a>
+        <button class="menu-btn" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title reveal">Projets et réalisations</h1>
+        <p class="section-subtitle reveal">
+          Voici mes projet        </p>
+
+        <div class="filter-bar reveal">
+          <button class="filter-btn active" data-filter="all">Tous</button>
+          <button class="filter-btn" data-filter="web">Web</button>
+          <button class="filter-btn" data-filter="data">Data</button>
+          <button class="filter-btn" data-filter="network">Réseaux</button>
+        </div>
+
+        <div class="grid-3">
+          <article class="card project-card reveal" data-category="web">
+            <img src="assets/images/project-web.jpg" alt="Projet web" />
+            <div class="project-body">
+              <h3>Site web moderne</h3>
+              <p>Interface responsive avec animations, navigation claire et design professionnel.</p>
+              <div class="project-meta">
+                <span class="pill">HTML</span>
+                <span class="pill">CSS</span>
+                <span class="pill">JavaScript</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project-card reveal" data-category="data">
+            <img src="assets/images/project-data.jpg" alt="Projet data" />
+            <div class="project-body">
+              <h3>Dashboard data</h3>
+              <p>Visualisation de données avec graphiques, KPI et lecture rapide des résultats.</p>
+              <div class="project-meta">
+                <span class="pill">Python</span>
+                <span class="pill">Pandas</span>
+                <span class="pill">Matplotlib</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project-card reveal" data-category="network">
+            <img src="assets/images/project-network.jpg" alt="Projet réseaux" />
+            <div class="project-body">
+              <h3>Schéma réseau</h3>
+              <p>Architecture réseau, adressage, routage et documentation de base.</p>
+              <div class="project-meta">
+                <span class="pill">Réseaux</span>
+                <span class="pill">Linux</span>
+                <span class="pill">SDN</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <div class="card reveal">
+          <h2 class="section-title" style="font-size:1.8rem;">coder avec des editeur moderne</h2>
+          <p>
+            VScode est un outil facile pour debuguer   </p>
+          <img src="assets/images/code.jpg" alt="Code sur écran" style="margin-top:18px;border-radius:22px;">
+        </div>
+
+        <div class="card reveal">
+          <h2 class="section-title" style="font-size:1.8rem;">Capable à realiser des projets ci-dessous</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <h3>Projet web</h3>
+              <p>Un site ou une application web.</p>
+            </div>
+            <div class="timeline-item">
+              <h3>Projet data</h3>
+              <p>Notebook Python, dashboard ou analyse.</p>
+            </div>
+            <div class="timeline-item">
+              <h3>Projet réseau</h3>
+              <p>Schéma, topologie ou documentation technique.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 Tambiniavo TOHOFANTSOA</p>
+      <p>Projets</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
